@@ -1,0 +1,97 @@
+#' @title Samples variances of the Normal-Gamma prior distribution by Brown & Griffin (2010).
+#'
+#' @description This function samples variances from a Normal-Gamma prior distribution.
+#' The prior distribution has a hierarchical structure where each element \eqn{x_i} of a \eqn{k}-vector \eqn{X} follows: 
+#' \deqn{x_i \sim N(0,\vartheta_i \zeta_j), \vartheta_i \sim G(a_j, a_j / 2)
+#' \text{, and } \zeta_j^{-1} \sim G(b,c)} for \eqn{i=j=1,\dots,k}. The hyperparameter \eqn{a_j}
+#' follows an i.i.d. discrete hyperprior with \eqn{Pr(a_j = \tilde{a}_r) = p_r}, where
+#' \eqn{\tilde{a} = (\tilde{a}_1, \dots, \tilde{a}_R)'} is the vector of strictly
+#' positive support points. See Brown & Griffin (2010) and Gruber & Kastner (2025) for further details.
+#'
+#' @details This function is based on C++ code from the R package 
+#' \pkg{bayesianVARs} by Gruber (2025) and is using 
+#' objects and commands from the \pkg{armadillo} library by Sanderson & Curtin (2025)
+#' thanks to the \pkg{RcppArmadillo} package by Eddelbuettel, Francois, Bates, 
+#' Ni, & Sanderson (2025).
+#'
+#' @param x  A starting values vector of the variances. \strong{C++}: an \code{arma::vec} vector object.
+#' @param theta_tilde A starting values vector of \eqn{\vartheta_i}. \strong{C++}:an \code{arma::vec} vector object.
+#' @param zeta A starting value of \eqn{\zeta_j}. \strong{C++}: 
+#' an \code{double} object.
+#' @param a Prior shape parameter of the Gamma distribution for \eqn{\vartheta_i}. 
+#' \strong{C++}: an \code{double} object.
+#' @param a_vec Multinomial grid for updating shape parameter of the Gamma distribution.\strong{C++}: 
+#' an \code{arma::vec} vector object.
+#' @param varrho0 Prior shape parameter of the Gamma distribution for \eqn{\zeta_j}. \strong{C++}: an \code{double} object.
+#' @param varrho1 Prior scale parameter of the Gamma distribution for \eqn{\zeta_j}. \strong{C++}: an \code{double} object.
+#' @param hyper A logical value. TRUE or FALSE. \strong{C++}: an \code{bool} object
+#' @param tol The numerical tolerance, default is '1e-06'. \strong{C++}: an \code{double} object.
+#' 
+#' @return A vector of variances of the Normal-Gamma prior distribution. 
+#' \strong{C++}: an \code{arma::vec} object.
+#'
+#' @author Jianying Shelly Xie \email{shellyyinggxie@gmail.com}
+#'
+#' @references
+#' Gruber, L. (2025). bayesianVARs: MCMC Estimation of Bayesian Vectorautoregressions. 
+#' R package version 0.1.5.9000, <doi: 10.32614/CRAN.package.bayesianVARs>.
+#' 
+#' Gruber, L., & Kastner, G. (2025).
+#' Forecasting macroeconomic data with Bayesian VARs: Sparse or dense? It depends!.
+#' International Journal of Forecasting, 41(4), 1589-1619, 
+#' <doi:org/10.1016/j.ijforecast.2025.02.001>.
+#' 
+#' Philip J. Brown., Jim E. Griffin (2010). Inference with normal-gamma prior distributions 
+#' in regression problems. 
+#' Bayesian Analysis, 5(1), 171-188, <doi:org/10.1214/10-BA507>.
+#' 
+#' Eddelbuettel D., Francois R., Bates D., Ni B., Sanderson C. (2025). 
+#' RcppArmadillo: 'Rcpp' Integration for the 'Armadillo' Templated Linear 
+#' Algebra Library. R package version 15.0.2-2. <doi:10.32614/CRAN.package.RcppArmadillo>
+#' 
+#' Sanderson C., Curtin R. (2025). Armadillo: An Efficient Framework for 
+#' Numerical Linear Algebra. International Conference on Computer and Automation 
+#' Engineering, 303-307, <doi:10.1109/ICCAE64891.2025.10980539>
+#' 
+#'
+#' @examples
+#' sample_variances_normal_gamma(rep(0,2), rep(1,2), 1, 1, rep(1,2), 1, 1, TRUE, 1e-6)
+#'
+#' @export
+sample_variances_normal_gamma <- function(x, theta_tilde, zeta, a, a_vec, varrho0, varrho1, hyper, tol=1e-6) {
+  stopifnot(
+    "The argument x must be a numeric vector." =
+      is.numeric(x) & is.vector(x) & all(!is.na(x)),
+    
+    "The argument theta_tilde must be a vector." =
+      is.numeric(theta_tilde) & is.vector(theta_tilde) & all(!is.na(theta_tilde)),
+    
+    "The argument zeta must be a positive scalar." =
+      is.numeric(zeta) & zeta > 0 & length(zeta) == 1,
+    
+    "The argument a must be a numeric positive scalar." =
+      is.numeric(a) & a > 0 & length(a) == 1,
+    
+    "The argument a_vec must be a numeric positive vector." =
+      is.numeric(a_vec) & a_vec > 0 & is.vector(a_vec) & all(!is.na(a_vec)),
+    
+    "The arguments x, theta_tilde and a_vec must have the same length." =
+      length(x) == length(theta_tilde) & length(x) == length(a_vec),
+    
+    "The argument varrho0 must be a positive scalar." =
+      is.numeric(varrho0) & varrho0 > 0 & length(varrho0) == 1,
+    
+    "The argument varrho1 must be a positive scalar." =
+      is.numeric(varrho1) & varrho1 > 0 & length(varrho1) == 1,
+    
+    "The argument hyper must be a logical value." =
+      is.logical(hyper),
+    
+    "The argument tol must be a non-negative scalar." =
+      is.numeric(tol) & a > 0 & length(a) == 1
+  )
+
+  out <- .Call(`_StealLikeBayes_sample_variances_normal_gamma`, x, theta_tilde, zeta, a, a_vec, varrho0, varrho1, hyper, tol)
+
+  return(out)
+}
