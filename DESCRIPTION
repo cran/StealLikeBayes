@@ -1,8 +1,8 @@
 Package: StealLikeBayes
 Type: Package
 Title: A Compendium of Bayesian Statistical Routines Written in 'C++'
-Version: 1.0
-Date: 2025-11-26
+Version: 2.0
+Date: 2026-08-31
 Maintainer: Tomasz Woźniak <wozniak.tom@pm.me>
 Authors@R: c(
     person(
@@ -12,7 +12,7 @@ Authors@R: c(
       role = c("aut", "cre"),
       comment = c(
         ORCID = "0000-0003-2212-2378", 
-        contributions = "contributions: rnorm1_precision_sampler, rgennorm"
+        contributions = "contributions: rmvnorm1_precision_sampler, rgennorm, rgig1, rig2"
       )
     ),
     person(
@@ -79,13 +79,13 @@ URL: https://bsvars.org/StealLikeBayes/
 BugReports: https://github.com/bsvars/StealLikeBayes/issues
 License: GPL (>= 3)
 Encoding: UTF-8
-RoxygenNote: 7.3.3
 Config/Needs/website: rmarkdown
+Config/roxygen2/version: 8.0.0
 NeedsCompilation: yes
-Packaged: 2025-11-26 20:33:25 UTC; twozniak
+Packaged: 2026-08-31 09:42:45 UTC; twozniak
 Author: Tomasz Woźniak [aut, cre] (ORCID:
     <https://orcid.org/0000-0003-2212-2378>, contributions:
-    contributions: rnorm1_precision_sampler, rgennorm),
+    contributions: rmvnorm1_precision_sampler, rgennorm, rgig1, rig2),
   Xiaolei Wang [aut] (ORCID: <https://orcid.org/0009-0005-6192-9061>,
     contributions: contributions: rhaar1),
   Longcan Li [aut] (ORCID: <https://orcid.org/0009-0007-2190-768X>,
@@ -98,4 +98,4 @@ Author: Tomasz Woźniak [aut, cre] (ORCID:
   Kenyon Ng [aut] (ORCID: <https://orcid.org/0000-0002-6315-9831>,
     contributions: contributions: rtmvnorm_hmc)
 Repository: CRAN
-Date/Publication: 2025-12-02 14:50:02 UTC
+Date/Publication: 2026-08-31 17:20:08 UTC

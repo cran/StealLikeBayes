@@ -110,6 +110,48 @@ namespace StealLikeBayes {
         return Rcpp::as<arma::cube >(rcpp_result_gen);
     }
 
+    inline double univar_rgig_newapproach1(double lambda, double lambda_old, double omega, double alpha) {
+        typedef SEXP(*Ptr_univar_rgig_newapproach1)(SEXP,SEXP,SEXP,SEXP);
+        static Ptr_univar_rgig_newapproach1 p_univar_rgig_newapproach1 = NULL;
+        if (p_univar_rgig_newapproach1 == NULL) {
+            validateSignature("double(*univar_rgig_newapproach1)(double,double,double,double)");
+            p_univar_rgig_newapproach1 = (Ptr_univar_rgig_newapproach1)R_GetCCallable("StealLikeBayes", "_StealLikeBayes_univar_rgig_newapproach1");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_univar_rgig_newapproach1(Shield<SEXP>(Rcpp::wrap(lambda)), Shield<SEXP>(Rcpp::wrap(lambda_old)), Shield<SEXP>(Rcpp::wrap(omega)), Shield<SEXP>(Rcpp::wrap(alpha)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<double >(rcpp_result_gen);
+    }
+
+    inline double rgig1(double lambda, double chi, double psi) {
+        typedef SEXP(*Ptr_rgig1)(SEXP,SEXP,SEXP);
+        static Ptr_rgig1 p_rgig1 = NULL;
+        if (p_rgig1 == NULL) {
+            validateSignature("double(*rgig1)(double,double,double)");
+            p_rgig1 = (Ptr_rgig1)R_GetCCallable("StealLikeBayes", "_StealLikeBayes_rgig1");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rgig1(Shield<SEXP>(Rcpp::wrap(lambda)), Shield<SEXP>(Rcpp::wrap(chi)), Shield<SEXP>(Rcpp::wrap(psi)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<double >(rcpp_result_gen);
+    }
+
     inline arma::mat qr_sign_cpp(const arma::mat& A) {
         typedef SEXP(*Ptr_qr_sign_cpp)(SEXP);
         static Ptr_qr_sign_cpp p_qr_sign_cpp = NULL;
@@ -150,6 +192,27 @@ namespace StealLikeBayes {
         if (rcpp_result_gen.inherits("try-error"))
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
         return Rcpp::as<arma::mat >(rcpp_result_gen);
+    }
+
+    inline arma::vec rig2(const int n, const double s, const double nu) {
+        typedef SEXP(*Ptr_rig2)(SEXP,SEXP,SEXP);
+        static Ptr_rig2 p_rig2 = NULL;
+        if (p_rig2 == NULL) {
+            validateSignature("arma::vec(*rig2)(const int,const double,const double)");
+            p_rig2 = (Ptr_rig2)R_GetCCallable("StealLikeBayes", "_StealLikeBayes_rig2");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rig2(Shield<SEXP>(Rcpp::wrap(n)), Shield<SEXP>(Rcpp::wrap(s)), Shield<SEXP>(Rcpp::wrap(nu)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<arma::vec >(rcpp_result_gen);
     }
 
     inline Rcpp::List cholesky_tridiagonal(const arma::vec& omega_diag, const double& omega_offdiag) {
@@ -215,17 +278,17 @@ namespace StealLikeBayes {
         return Rcpp::as<arma::vec >(rcpp_result_gen);
     }
 
-    inline arma::vec rnorm1_precision_sampler(const arma::vec& location, const arma::vec& precision_diag, const double& precision_offdiag) {
-        typedef SEXP(*Ptr_rnorm1_precision_sampler)(SEXP,SEXP,SEXP);
-        static Ptr_rnorm1_precision_sampler p_rnorm1_precision_sampler = NULL;
-        if (p_rnorm1_precision_sampler == NULL) {
-            validateSignature("arma::vec(*rnorm1_precision_sampler)(const arma::vec&,const arma::vec&,const double&)");
-            p_rnorm1_precision_sampler = (Ptr_rnorm1_precision_sampler)R_GetCCallable("StealLikeBayes", "_StealLikeBayes_rnorm1_precision_sampler");
+    inline arma::vec rmvnorm1_precision_sampler(const arma::vec& location, const arma::vec& precision_diag, const double& precision_offdiag) {
+        typedef SEXP(*Ptr_rmvnorm1_precision_sampler)(SEXP,SEXP,SEXP);
+        static Ptr_rmvnorm1_precision_sampler p_rmvnorm1_precision_sampler = NULL;
+        if (p_rmvnorm1_precision_sampler == NULL) {
+            validateSignature("arma::vec(*rmvnorm1_precision_sampler)(const arma::vec&,const arma::vec&,const double&)");
+            p_rmvnorm1_precision_sampler = (Ptr_rmvnorm1_precision_sampler)R_GetCCallable("StealLikeBayes", "_StealLikeBayes_rmvnorm1_precision_sampler");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_rnorm1_precision_sampler(Shield<SEXP>(Rcpp::wrap(location)), Shield<SEXP>(Rcpp::wrap(precision_diag)), Shield<SEXP>(Rcpp::wrap(precision_offdiag)));
+            rcpp_result_gen = p_rmvnorm1_precision_sampler(Shield<SEXP>(Rcpp::wrap(location)), Shield<SEXP>(Rcpp::wrap(precision_diag)), Shield<SEXP>(Rcpp::wrap(precision_offdiag)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -571,11 +634,11 @@ namespace StealLikeBayes {
         return Rcpp::as<Eigen::MatrixXd >(rcpp_result_gen);
     }
 
-    inline arma::vec sample_variances_horseshoe(const arma::vec x, arma::vec& theta, double& zeta, arma::vec& nu, double& varpi) {
+    inline Rcpp::List sample_variances_horseshoe(const arma::vec x, arma::vec& theta, double& zeta, arma::vec& nu, double& varpi) {
         typedef SEXP(*Ptr_sample_variances_horseshoe)(SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_sample_variances_horseshoe p_sample_variances_horseshoe = NULL;
         if (p_sample_variances_horseshoe == NULL) {
-            validateSignature("arma::vec(*sample_variances_horseshoe)(const arma::vec,arma::vec&,double&,arma::vec&,double&)");
+            validateSignature("Rcpp::List(*sample_variances_horseshoe)(const arma::vec,arma::vec&,double&,arma::vec&,double&)");
             p_sample_variances_horseshoe = (Ptr_sample_variances_horseshoe)R_GetCCallable("StealLikeBayes", "_StealLikeBayes_sample_variances_horseshoe");
         }
         RObject rcpp_result_gen;
@@ -589,14 +652,14 @@ namespace StealLikeBayes {
             throw Rcpp::LongjumpException(rcpp_result_gen);
         if (rcpp_result_gen.inherits("try-error"))
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-        return Rcpp::as<arma::vec >(rcpp_result_gen);
+        return Rcpp::as<Rcpp::List >(rcpp_result_gen);
     }
 
-    inline arma::vec sample_variances_normal_gamma(const arma::vec x, arma::vec& theta_tilde, double& zeta, double& a, const arma::vec a_vec, const double varrho0, const double varrho1, const bool hyper, const double tol = 1e-6) {
+    inline Rcpp::List sample_variances_normal_gamma(const arma::vec x, arma::vec& theta_tilde, double& zeta, double& a, const arma::vec a_vec, const double varrho0, const double varrho1, const bool hyper, const double tol = 1e-6) {
         typedef SEXP(*Ptr_sample_variances_normal_gamma)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_sample_variances_normal_gamma p_sample_variances_normal_gamma = NULL;
         if (p_sample_variances_normal_gamma == NULL) {
-            validateSignature("arma::vec(*sample_variances_normal_gamma)(const arma::vec,arma::vec&,double&,double&,const arma::vec,const double,const double,const bool,const double)");
+            validateSignature("Rcpp::List(*sample_variances_normal_gamma)(const arma::vec,arma::vec&,double&,double&,const arma::vec,const double,const double,const bool,const double)");
             p_sample_variances_normal_gamma = (Ptr_sample_variances_normal_gamma)R_GetCCallable("StealLikeBayes", "_StealLikeBayes_sample_variances_normal_gamma");
         }
         RObject rcpp_result_gen;
@@ -610,7 +673,7 @@ namespace StealLikeBayes {
             throw Rcpp::LongjumpException(rcpp_result_gen);
         if (rcpp_result_gen.inherits("try-error"))
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-        return Rcpp::as<arma::vec >(rcpp_result_gen);
+        return Rcpp::as<Rcpp::List >(rcpp_result_gen);
     }
 
 }
